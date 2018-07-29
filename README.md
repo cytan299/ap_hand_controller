@@ -2,7 +2,7 @@
 
 by C.Y. Tan 2018
 
-![Simple Astro-Physics Hand controller](https://github.com/cytan299/ap_handcontroller/blob/master/pics/IMG_1873.jpg)
+![Simple Astro-Physics Hand controller](https://github.com/cytan299/ap_hand_controller/blob/master/pics/closed_small.jpg)
 
 It is well-known, that the new GTOCP4 control box can be controlled
 with a phone or a pad. However, I really like the feel of real buttons
@@ -24,7 +24,7 @@ does not initialize the CP4, have any star database, goto capability
 etc. The goal is to have to be able to move the mount for calibrating
 to a star and be compatible with PoleMaster.
 
-![Hand controller connected to the GTOCP4 ](https://github.com/cytan299/ap_handcontroller/blob/master/pics/IMG_3213.jpg)
+![Hand controller connected to the GTOCP4 ](https://github.com/cytan299/ap_hand_controller/blob/master/pics/IMG_3213.jpg)
 
 ## Design
 
@@ -46,7 +46,7 @@ selecting menu items and for moving the telescope in RA and DEC.
 This is unsupported hardware. Build at your own peril! :)
 
 You can submit questions or bug reports using the
-[issues](https://github.com/cytan299/ap_handcontroller/issues) tab on
+[issues](https://github.com/cytan299/ap_hand_controller/issues) tab on
 the right and then click on **NEW**.
 
 Have fun!
@@ -65,7 +65,7 @@ the design. These files can be sent directly to
 ## Other information
 
 More information can be found in he *README.md* files in each
-directory and the [wiki](https://github.com/cytan299/ap_handcontroller/wiki/Hand-Controller-for-AP-Mounts) of this project on github.
+directory and the [wiki](https://github.com/cytan299/ap_hand_controller/wiki/Hand-Controller-for-AP-Mounts) of this project on github.
 
 ## Copyright
 All the software, documentation, and hardware that I have written is
