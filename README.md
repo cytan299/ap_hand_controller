@@ -8,28 +8,29 @@ It is well-known, that the new GTOCP4 control box can be controlled
 with a phone or a pad. However, I really like the feel of real buttons
 in a controller rather than using "virtual" buttons on a phone or pad.
 This means that the only solution that Astro-Physics (AP) has for people like
-me is to sell me an AP keypad.
+me is to buy their AP keypad.
 
 If I had the AP keypad, I will mainly use it for Polar aligning with
-PoleMaster and for recalibrating (which is syncing in all other
-mounts). After polar alignment and recalibrating, PHD2 will be used for
-guiding the scope. Therefore, the AP keypad will only be used at the
-start of my imaging session, and no more. Thus, it is hard for me to
-justify spending $1000 for an AP keypad when I will hardly use it. I
-had to figure out a solution.
+PoleMaster and for recalibrating (which is the same as syncing for all
+other mounts). After polar alignment and recalibrating, PHD2 will be
+used for guiding the scope. Therefore, the AP keypad will only be used
+at the start of my imaging session, and no more. Thus, it is hard for
+me to justify spending $1000 for an AP keypad when I will hardly use.
+I had to figure out a solution.
 
-And here's my solution: I have built a simple hand controller for my
-Mach1GTO. Its purpose is *not* to replace the AP keypad because it
-does not initialize the CP4, have any star database, goto capability
-etc. The goal is to have to be able to move the mount for calibrating
-to a star and be compatible with PoleMaster.
+And here's my solution:
+* I have built a simple hand controller for my Mach1GTO. Its purpose
+is **not** to replace the AP keypad because it does not initialize the
+CP4, have any star database or goto capability etc. My goal is to just
+move the mount for calibrating the mount to a star and be compatible
+with PoleMaster.
 
 ![Hand controller connected to the GTOCP4 ](https://github.com/cytan299/ap_hand_controller/blob/master/pics/IMG_3213.jpg)
 
 ## Design
 
 The goal of my hand controller is to be low cost (less than $200). The
-simplest way to do this is to base it on an
+simplest way I know how to do this is to base it on an
 [Arduino controller](https://www.sparkfun.com/products/12640). The
 other low cost components are
 
@@ -61,6 +62,7 @@ the design. These files can be sent directly to
 * **eagle** Eagle schematic and board files.
 * **arduino** Source code for the hand controller.
 * **pics** Photographs used in the README's and Wiki.
+* **user manual** To be written in ...
 
 ## Other information
 
