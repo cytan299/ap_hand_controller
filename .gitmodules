@@ -1,0 +1,3 @@
+[submodule "arduino/hand_controller"]
+	path = arduino/hand_controller
+	url = file:///Users/cytan/projects/ap_hand_controller/arduino/hand_controller
