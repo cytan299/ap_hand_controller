@@ -1026,27 +1026,28 @@ void draw_direction()
       oled.print("S");
     break;
     case EAST:
-      oled.setCursor(48,19);
+      oled.setCursor(9,19);      
       oled.print("E");
     break;
     case WEST:
-      oled.setCursor(9,19);
+      oled.setCursor(48,19);
       oled.print("W");
     break;
     case NORTH_EAST:
-      oled.setCursor(46,3);
+      oled.setCursor(12,3);
       oled.print("NE");
     break;
     case NORTH_WEST:
-      oled.setCursor(12,3);      
+      oled.setCursor(46,3);      
       oled.print("NW");
     break;
     case SOUTH_EAST:
-      oled.setCursor(46,35);
+      oled.setCursor(12,35);
       oled.print("SE");
     break;
     case SOUTH_WEST:
-      oled.setCursor(12,35);
+
+      oled.setCursor(46,35);      
       oled.print("SW");
     break;
     case STOP:
@@ -1088,10 +1089,10 @@ int navigation(DIRECTION* dir_ns, DIRECTION* dir_ew)
   // check RA next
   switch(joy_stick.GetRAState()){
     case JOY_LEFT:
-      *dir_ew = WEST;
+      *dir_ew = EAST;
     break;
     case JOY_RIGHT:
-      *dir_ew = EAST;
+      *dir_ew = WEST;
     break;
     case JOY_CENTRED:
       *dir_ew = STOP;
@@ -1298,12 +1299,12 @@ void on_ra_move_selected(MenuComponent* p_menu_component)
   while(1){
     switch(joy_stick.GetRAState()){
       case JOY_LEFT:
-        ap.Move(WEST);
-	dir_ew = WEST;
+        ap.Move(EAST);
+	dir_ew = EAST;
       break;
       case JOY_RIGHT:
-        ap.Move(EAST);
-	dir_ew = EAST;	
+        ap.Move(WEST);
+	dir_ew = WEST;	
       break;
       case JOY_CENTRED:
         ap.Move(STOP);
