@@ -1,4 +1,4 @@
-/*$Id: hand_controller.ino | Sun Jul 29 17:38:52 2018 -0500 | cytan  $*/
+/*$Id: hand_controller.ino | Sun Aug 12 00:55:52 2018 -0500 | cytan  $*/
 /*
     hand_controller is the controller code for the Arduino Sparkfun Pro Micro
     Copyright (C) 2018  C.Y. Tan
@@ -32,6 +32,7 @@
 #include <MenuSystem.h>
 
 /* local include files (use "") */
+#include "EnableInterrupt.h"
 
 /**********************************************************************
   There are two hardware versions. The development version is Version 1
@@ -60,6 +61,7 @@ MicroOLED oled(OLED_PIN_RESET, OLED_PIN_DC, OLED_PIN_CS); // SPI declaration
 #define JOY_RA		A8
 #define JOY_DEC		A9
 #define JOY_BUTTON	A10
+#define JOY_BUTTON_PIN	10
 
 /**********************************************************************
   Define the led lights pwm pin
@@ -644,6 +646,13 @@ AUTHOR
 SEE ALSO
 
 **********************************************************************/
+volatile bool is_joy_pressed = false;
+
+void joy_state_int()
+{
+  is_joy_pressed = true;
+}
+
 enum JOY_STATE { JOY_CENTRED, JOY_DOWN, JOY_UP, JOY_LEFT, JOY_RIGHT};
 
 #define DEBOUNCE_TIME	100 // ms
@@ -651,8 +660,8 @@ class JoyStick {
 public:
   JoyStick(){
     // set up joystick button
-    pinMode(JOY_BUTTON, INPUT);
-    digitalWrite(JOY_BUTTON, HIGH);
+    pinMode(JOY_BUTTON, INPUT_PULLUP);
+    enableInterrupt(JOY_BUTTON_PIN, joy_state_int, FALLING);
   }
   
   JOY_STATE GetDecState() const{
@@ -688,9 +697,11 @@ public:
   }
 
   bool IsClicked() const{
-    // wait for a while before reading state    
-    delay(DEBOUNCE_TIME);
-    return digitalRead(JOY_BUTTON) == 0;
+    if(is_joy_pressed){
+      is_joy_pressed = false;
+      return true;
+    }
+    return false;
   }
 
   int GetR() const{
@@ -1531,7 +1542,7 @@ AUTHOR
 	C.Y. Tan
 
 REVISION
-	$Revision: 2ab28b2bf80bc04dcdde59e1b3eb2b4270de41e8 $
+	$Revision: 786dc8d2f85d49c2bdfed528546ef81088f1e77f $
 
 SEE ALSO
 
