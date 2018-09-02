@@ -1,4 +1,4 @@
-/*$Id: hand_controller.ino | Sun Aug 12 00:55:52 2018 -0500 | cytan  $*/
+/*$Id: hand_controller.ino | Sat Sep 1 23:27:35 2018 -0500 | cytan  $*/
 /*
     hand_controller is the controller code for the Arduino Sparkfun Pro Micro
     Copyright (C) 2018  C.Y. Tan
@@ -655,45 +655,80 @@ void joy_state_int()
 
 enum JOY_STATE { JOY_CENTRED, JOY_DOWN, JOY_UP, JOY_LEFT, JOY_RIGHT};
 
-#define DEBOUNCE_TIME	100 // ms
+#define DEBOUNCE_TIME	50 // ms
 class JoyStick {
+private:
+  unsigned long _last_DEC_debounce_time = 0; // ms
+  JOY_STATE _last_DEC_state = JOY_CENTRED;
+
+  unsigned long _last_RA_debounce_time = 0; // ms
+  JOY_STATE _last_RA_state = JOY_CENTRED;  
+  
 public:
   JoyStick(){
-    // set up joystick button
+    // set up joystick button as interrupt
     pinMode(JOY_BUTTON, INPUT_PULLUP);
     enableInterrupt(JOY_BUTTON_PIN, joy_state_int, FALLING);
   }
   
-  JOY_STATE GetDecState() const{
-    // wait for a while before reading state
-    delay(DEBOUNCE_TIME);
+  JOY_STATE GetDecState() {
     // read the joystick dec
     int dec = analogRead(JOY_DEC);
+    JOY_STATE state;
     // 500 in middle. Up is 0, down is 1024    
     if(dec < 480){
-      return JOY_UP;
+      state = JOY_UP;
+    }
+    else {
+      if(dec > 544){
+	state = JOY_DOWN;
+      }
+      else {
+	state = JOY_CENTRED;
+      }
     }
 
-    if(dec > 544){
-      return JOY_DOWN;
+    if(state != _last_DEC_state){
+      // check whether it is greater than debounce time
+      unsigned long now = millis();
+      if((now - _last_DEC_debounce_time) > DEBOUNCE_TIME){
+        // now the state really has really changed!
+	_last_DEC_debounce_time = now;	
+	_last_DEC_state = state;
+      }
     }
-    return JOY_CENTRED;
+
+    return _last_DEC_state;
   }
 
-  JOY_STATE GetRAState() const{
-    // wait for a while before reading state
-    delay(DEBOUNCE_TIME);    
+  JOY_STATE GetRAState() {
     // read the joystick ra
     int ra = analogRead(JOY_RA);
+    JOY_STATE state;
     // 500 in middle. right is 0, left is 1024    
     if(ra < 480){
-      return JOY_RIGHT;
+      state = JOY_RIGHT;
+    }
+    else {
+      if(ra > 544){
+	state = JOY_LEFT;
+      }
+      else {
+	state = JOY_CENTRED;
+      }
     }
 
-    if(ra > 544){
-      return JOY_LEFT;
+    if(state != _last_RA_state){
+      // check whether it is greater than debounce time
+      unsigned long now = millis();
+      if((now - _last_RA_debounce_time) > DEBOUNCE_TIME){
+        // now the state really has really changed!
+	_last_RA_debounce_time = now;	
+	_last_RA_state = state;
+      }
     }
-    return JOY_CENTRED;    
+
+    return _last_RA_state;
   }
 
   bool IsClicked() const{
@@ -713,7 +748,6 @@ public:
 #endif
     return static_cast<int>(sqrt(ra*ra + dec*dec));
   }
-
 };
 
 JoyStick joy_stick;
@@ -752,9 +786,9 @@ public:
     pinMode(BACK_BUTTON, INPUT);
     digitalWrite(BACK_BUTTON, HIGH);      
   }
-  
+
   BUTTON_STATE GetState() const {
-    delay(DEBOUNCE_TIME);
+    // not doing any debouncing here. Seems to work.
     if(digitalRead(MENU_BUTTON) == 0){
       return MENU_ON;
     }
@@ -765,6 +799,7 @@ public:
 
     return BOTH_OFF;
   }
+
 };
 
 MenuBackButtons mb_buttons;
@@ -1542,7 +1577,7 @@ AUTHOR
 	C.Y. Tan
 
 REVISION
-	$Revision: 786dc8d2f85d49c2bdfed528546ef81088f1e77f $
+	$Revision: 12a240d61076067c23d95cd0381597f8dc8ea98d $
 
 SEE ALSO
 
@@ -1594,19 +1629,11 @@ void setup()
 
 void loop()
 {
+  // without a delay() here, the joystick menu selection just moves too
+  // quickly.  I've tuned it so that the joystick menu selection is
+  // not too sensitive.
+  delay(150);  
   process_menu();
-#ifdef AAAAA
-  int buf[15];
-  if(ap.GetVersion(buf)){
-    for(int i=0; i<15; i++){
-      Serial.print((char)buf[i]);
-      if(buf[i] == '#'){
-	Serial.println("");
-	break;
-      }
-    }
-  }
-#endif
 }
 
 
