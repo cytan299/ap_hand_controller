@@ -1,4 +1,4 @@
-/*$Id: hand_controller.ino | Sat Sep 1 23:27:35 2018 -0500 | cytan  $*/
+/*$Id: hand_controller.ino | Sun Sep 2 13:58:51 2018 -0500 | cytan  $*/
 /*
     hand_controller is the controller code for the Arduino Sparkfun Pro Micro
     Copyright (C) 2018  C.Y. Tan
@@ -1577,7 +1577,7 @@ AUTHOR
 	C.Y. Tan
 
 REVISION
-	$Revision: 12a240d61076067c23d95cd0381597f8dc8ea98d $
+	$Revision: 4ad3403a6b02001c18e8b92f03a7e8e319310bf3 $
 
 SEE ALSO
 
@@ -1629,9 +1629,11 @@ void setup()
 
 void loop()
 {
-  // without a delay() here, the joystick menu selection just moves too
-  // quickly.  I've tuned it so that the joystick menu selection is
-  // not too sensitive.
+  /*
+    I have to wait for awhile (150 ms) after selecting a menu item, so
+    that there is time for the item to be highlighted and not go
+    immediately to the next menu item.
+   */
   delay(150);  
   process_menu();
 }
