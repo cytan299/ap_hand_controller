@@ -67,7 +67,7 @@ the design. These files can be sent directly to
 ## Other information
 
 More information can be found in he *README.md* files in each
-directory and the [wiki](https://github.com/cytan299/ap_hand_controller/wiki/Hand-Controller-for-AP-Mounts) of this project on github.
+directory and the [wiki](https://github.com/cytan299/ap_hand_controller/wiki/A-simple-hand-controller-for-Astro-Physics-mounts) of this project on github.
 
 ## Copyright
 All the software, documentation, and hardware that I have written is
